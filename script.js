@@ -1,6 +1,34 @@
+const dob = document.querySelector("#dob");
+const displayPalindrome = document.querySelector("#display-palindrome");
+const displayNextPalindrome = document.querySelector(
+  "#display-next-palindrome"
+);
+const palindromeBtn = document.querySelector("#check-palindrome-btn");
+
+palindromeBtn.addEventListener("click", function () {
+  if (dob.value) {
+    let birthDay = dob.value.split("-");
+    let dateX = {
+      day: Number(birthDay[2]),
+      month: Number(birthDay[1]),
+      year: Number(birthDay[0]),
+    };
+    //check palindrome
+    if (checkPalindromeForAllDateFormats(dateX)) {
+      displayPalindrome.innerText = "hurray! your birthday is palindrome";
+      displayNextPalindrome.innerText = "";
+    } else {
+      let [remaingDay, datenxt] = getNextPalindromeDate(dateX);
+      displayPalindrome.innerText = "";
+      displayNextPalindrome.innerText = `remaining day: ${remaingDay} date: ${datenxt.day} - ${datenxt.month} - ${datenxt.year} `;
+    }
+  } else {
+    displayPalindrome.innerText = "date cannot be empty";
+  }
+});
+
 function reverseStr(str) {
-  let reverse = [...str].reverse().join("");
-  return reverse;
+  return [...str].reverse().join("");
 }
 
 function isPalindrome(str) {
@@ -25,63 +53,95 @@ function convertDateToString(date) {
   return dateStr;
 }
 
-function getDateInAllFormats(date) {
-  let dateStr = convertDateToString(date);
-  // DD-MM-YYYY
-  // MM-DD-YYYY
-  // YYYY-MM-DD
-  // DD-MM-YY
-  // MM-DD-YY
-  // YY-MM-DD
+// Your function will return an array of strings for these date formats
 
-  let ddmmyyyy = dateStr.day + dateStr.month + dateStr.year;
-  let mmddyyyy = dateStr.month + dateStr.day + dateStr.year;
-  let yyyymmdd = dateStr.year + dateStr.month + dateStr.day;
-  let ddmmyy = dateStr.day + dateStr.month + dateStr.year.slice(-2);
-  let mmddyy = dateStr.month + dateStr.day + dateStr.year.slice(-2);
-  let yymmdd = dateStr.year.slice(-2) + dateStr.month + dateStr.day;
+// DD-MM-YYYY
+// MM-DD-YYYY
+// YYYY-MM-DD
+// DD-MM-YY
+// MM-DD-YY
+// YY-MM-DD
+
+function getDateInAllFormats(date) {
+  let dateInStr = convertDateToString(date);
+
+  let ddmmyyyy = dateInStr.day + dateInStr.month + dateInStr.year;
+  let mmddyyyy = dateInStr.month + dateInStr.day + dateInStr.year;
+  let yyyymmdd = dateInStr.year + dateInStr.month + dateInStr.day;
+  let ddmmyy = dateInStr.day + dateInStr.month + dateInStr.year.slice(-2);
+  let mmddyy = dateInStr.month + dateInStr.day + dateInStr.year.slice(-2);
+  let yymmdd = dateInStr.year.slice(-2) + dateInStr.month + dateInStr.day;
 
   return [ddmmyyyy, mmddyyyy, yyyymmdd, ddmmyy, mmddyy, yymmdd];
 }
 
 function checkPalindromeForAllDateFormats(date) {
-  let listOfDates = getDateInAllFormats(date);
-  for (let x = 0; x < listOfDates.length; x++) {
-    return isPalindrome(listOfDates[x]);
+  let dateFormatList = getDateInAllFormats(date);
+
+  for (let i = 0; i < dateFormatList.length; i++) {
+    return isPalindrome(dateFormatList[i]);
   }
+}
+
+function isLeapYear(year) {
+  if (year % 400 === 0) return true;
+
+  if (year % 100 === 0) return false;
+
+  if (year % 4 === 0) return true;
+
+  return false;
 }
 
 function getNextDate(date) {
   let day = date.day + 1;
   let month = date.month;
   let year = date.year;
+
   let daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   if (month === 2) {
     if (isLeapYear(year)) {
-      if (day > 28) {
-        month;
+      if (day > 29) {
+        day = 1;
+        month = 3;
       }
-    } else if (day > 28) {
-      day = 1;
-      month++;
+    } else {
+      if (day > 28) {
+        day = 1;
+        month = 3;
+      }
     }
   } else {
     if (day > daysInMonth[month - 1]) {
       day = 1;
       month++;
     }
-    if (month > daysInMonth.length) {
-      day = 1;
-      month = 1;
-      year++;
+  }
+
+  if (month > 12) {
+    month = 1;
+    year++;
+  }
+
+  return {
+    day: day,
+    month: month,
+    year: year,
+  };
+}
+
+function getNextPalindromeDate(date) {
+  let nextDate = getNextDate(date);
+
+  let ctr = 0;
+  while (1) {
+    ctr++;
+
+    if (checkPalindromeForAllDateFormats(nextDate)) {
+      return [ctr, nextDate];
+    } else {
+      nextDate = getNextDate(nextDate);
     }
   }
-  return { day: day, month: month, year: year };
 }
-
-function isLeapYear(year) {
-  return year % 4 === 0;
-}
-
-const date = { day: 13, month: 2, year: 2021 };
