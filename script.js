@@ -15,15 +15,16 @@ palindromeBtn.addEventListener("click", function () {
     };
     //check palindrome
     if (checkPalindromeForAllDateFormats(dateX)) {
-      displayPalindrome.innerText = "hurray! your birthday is palindrome";
+      displayPalindrome.innerText = " 🎉 hurray! your birthday is palindrome";
       displayNextPalindrome.innerText = "";
     } else {
       let [remaingDay, datenxt] = getNextPalindromeDate(dateX);
-      displayPalindrome.innerText = "";
-      displayNextPalindrome.innerText = `remaining day: ${remaingDay} date: ${datenxt.day} - ${datenxt.month} - ${datenxt.year} `;
+      displayPalindrome.innerText =
+        "🙁 Sorry! Your birthday is not a palindrome";
+      displayNextPalindrome.innerText = `The next palindrome date is ${datenxt.day}-${datenxt.month}-${datenxt.year}. You missed it by ${remaingDay} days. `;
     }
   } else {
-    displayPalindrome.innerText = "date cannot be empty";
+    displayPalindrome.innerText = "Birth Date field cannot be empty";
   }
 });
 

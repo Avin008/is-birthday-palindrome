@@ -1,27 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+:root {
+  --primary: #fde68a;
+  --secondary: #047857;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--primary);
+}
+
 .container {
   text-align: center;
+  width: 60%;
+  margin: auto;
+  background-color: ;
+  padding: ;
 }
 
 label {
   display: block;
-  margin: 0.5rem;
+  padding-bottom: 0.2rem;
 }
 
 input {
-  padding: 0.5rem 3rem;
-  border-style: none;
-  border: 1px solid black;
+  width: 150px;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
   border-radius: 1rem;
-  margin: 1rem;
+  border-color: gray;
+  border: none;
+  border: 2px solid gray;
 }
 
-button {
+#check-palindrome-btn {
   display: block;
   margin: auto;
   padding: 0.5rem 1rem;
-  background-color: blanchedalmond;
+  border-radius: 0.8rem;
   font-weight: bold;
-  border-style: none;
-  border: 1px solid black;
-  border-radius: 1rem;
+  outline-style: none;
+  background-color: #b91c1c;
+  color: white;
+  border: none;
+}
+
+#github {
+  text-align: center;
+  font-size: 2rem;
+  color: black;
+}
+
+#display-palindrome {
+  font-weight: bold;
+}
+
+#display-next-palindrome {
+  font-weight: bold;
+}
+
+#privacy {
+  font-weight: bold;
 }

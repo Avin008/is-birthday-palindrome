@@ -4,17 +4,39 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>is Birthday palindrome ?</title>
+    <title>is your birthday lucky?</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <div class="container">
-      <label for="dob"> Birthday: </label>
+      <h1>is your birthday a Palindrome? 🥳</h1>
+      <hr />
+      <label for="dob">Birth Date: </label>
       <input type="date" id="dob" />
-      <button id="check-palindrome-btn">Check palindrome</button>
+      <button id="check-palindrome-btn">Check</button>
+
       <p id="display-palindrome">Result here!</p>
-      <p id="display-next-palindrome">Display next palindrome</p>
+      <hr />
+      <p id="display-next-palindrome"></p>
+      <p id="privacy">
+        ** This is just a fun app. we don't store your data. Thanks for using 😃
+        **
+      </p>
+      <a id="github" href="https://github.com/Avin008/is-your-birthday-lucky"
+        ><i class="fab fa-github"></i
+      ></a>
     </div>
-    <script src="/script.js"></script>
+    <script src="./script.js"></script>
   </body>
 </html>
+
+<!-- input -dob
+button - check-palindrome-btn
+palindromeDisplay - display-palindrome
+next palindromedisplay - display-next-palindrome -->
