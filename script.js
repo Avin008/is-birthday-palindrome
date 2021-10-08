@@ -54,14 +54,7 @@ function convertDateToString(date) {
   return dateStr;
 }
 
-// Your function will return an array of strings for these date formats
 
-// DD-MM-YYYY
-// MM-DD-YYYY
-// YYYY-MM-DD
-// DD-MM-YY
-// MM-DD-YY
-// YY-MM-DD
 
 function getDateInAllFormats(date) {
   let dateInStr = convertDateToString(date);
