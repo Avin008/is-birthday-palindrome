@@ -1,44 +1,41 @@
 const dob = document.querySelector("#dob");
 const displayPalindrome = document.querySelector("#display-palindrome");
-const displayNextPalindrome = document.querySelector(
-  "#display-next-palindrome"
-);
-const palindromeBtn = document.querySelector("#check-palindrome-btn");
+const nextPalindromeDate = document.querySelector("#display-next-palindrome");
+const checkPalindromeBtn = document.querySelector("#check-palindrome-btn");
 
-palindromeBtn.addEventListener("click", function () {
-  if (dob.value) {
-    let birthDay = dob.value.split("-");
-    let dateX = {
-      day: Number(birthDay[2]),
-      month: Number(birthDay[1]),
-      year: Number(birthDay[0]),
-    };
-    //check palindrome
-    if (checkPalindromeForAllDateFormats(dateX)) {
-      displayPalindrome.innerText = " 🎉 hurray! your birthday is palindrome";
-      displayNextPalindrome.innerText = "";
-    } else {
-      let [remaingDay, datenxt] = getNextPalindromeDate(dateX);
-      displayPalindrome.innerText =
-        "🙁 Sorry! Your birthday is not a palindrome";
-      displayNextPalindrome.innerText = `The next palindrome date is ${datenxt.day}-${datenxt.month}-${datenxt.year}. You missed it by ${remaingDay} days. `;
-    }
+const isBirthdayPalindrome = () => {
+  let birthDay = dob.value.split("-");
+  let [year, month, day] = birthDay;
+  let userBirthDate = {
+    day: Number(day),
+    month: Number(month),
+    year: Number(year),
+  };
+
+  if (checkPalindromeForAllDateFormats(userBirthDate)) {
+    displayPalindrome.innerText = " 🎉 hurray! your birthday is palindrome";
+    nextPalindromeDate.innerText = "";
   } else {
-    displayPalindrome.innerText = "Birth Date field cannot be empty";
+    let [remaingDay, datenxt] = getNextPalindromeDate(userBirthDate);
+    displayPalindrome.innerText = "🙁 Sorry! Your birthday is not a palindrome";
+    nextPalindromeDate.innerText = `The next palindrome date is ${datenxt.day}-${datenxt.month}-${datenxt.year}. You missed it by ${remaingDay} days. `;
   }
-});
+};
 
-function reverseStr(str) {
-  return [...str].reverse().join("");
-}
+const checkPalindrome = () => {
+  dob.value
+    ? isBirthdayPalindrome()
+    : (displayPalindrome.innerText = "Birth Date field cannot be empty");
+};
 
-function isPalindrome(str) {
-  return str === reverseStr(str);
-}
+checkPalindromeBtn.addEventListener("click", checkPalindrome);
 
-function convertDateToString(date) {
+const reverseStr = (str) => [...str].reverse().join("");
+
+const isPalindrome = (str) => str === reverseStr(str);
+
+const convertDateToString = (date) => {
   const dateStr = { day: "", month: "", year: "" };
-
   if (date.day < 10) {
     dateStr.day = "0" + date.day;
   } else {
@@ -52,11 +49,9 @@ function convertDateToString(date) {
   dateStr.year = date.year.toString();
 
   return dateStr;
-}
+};
 
-
-
-function getDateInAllFormats(date) {
+const getDateInAllFormats = (date) => {
   let dateInStr = convertDateToString(date);
 
   let ddmmyyyy = dateInStr.day + dateInStr.month + dateInStr.year;
@@ -67,27 +62,21 @@ function getDateInAllFormats(date) {
   let yymmdd = dateInStr.year.slice(-2) + dateInStr.month + dateInStr.day;
 
   return [ddmmyyyy, mmddyyyy, yyyymmdd, ddmmyy, mmddyy, yymmdd];
-}
+};
 
-function checkPalindromeForAllDateFormats(date) {
+const checkPalindromeForAllDateFormats = (date) => {
   let dateFormatList = getDateInAllFormats(date);
 
-  for (let i = 0; i < dateFormatList.length; i++) {
-    return isPalindrome(dateFormatList[i]);
+  for (let x of dateFormatList) {
+    return isPalindrome(x);
   }
-}
+};
 
-function isLeapYear(year) {
-  if (year % 400 === 0) return true;
+const isLeapYear = (year) => {
+  year % 400 ? true : year % 100 === 0 ? false : year % 4 === 0 ? true : false;
+};
 
-  if (year % 100 === 0) return false;
-
-  if (year % 4 === 0) return true;
-
-  return false;
-}
-
-function getNextDate(date) {
+const getNextDate = (date) => {
   let day = date.day + 1;
   let month = date.month;
   let year = date.year;
@@ -123,9 +112,9 @@ function getNextDate(date) {
     month: month,
     year: year,
   };
-}
+};
 
-function getNextPalindromeDate(date) {
+const getNextPalindromeDate = (date) => {
   let nextDate = getNextDate(date);
 
   let ctr = 0;
@@ -138,4 +127,4 @@ function getNextPalindromeDate(date) {
       nextDate = getNextDate(nextDate);
     }
   }
-}
+};
