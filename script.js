@@ -4,8 +4,7 @@ const nextPalindromeDate = document.querySelector("#display-next-palindrome");
 const checkPalindromeBtn = document.querySelector("#check-palindrome-btn");
 
 const isBirthdayPalindrome = () => {
-  let birthDay = dob.value.split("-");
-  let [year, month, day] = birthDay;
+  let [year, month, day] = dob.value.split("-");
   let userBirthDate = {
     day: Number(day),
     month: Number(month),
@@ -16,9 +15,11 @@ const isBirthdayPalindrome = () => {
     displayPalindrome.innerText = " 🎉 hurray! your birthday is palindrome";
     nextPalindromeDate.innerText = "";
   } else {
-    let [remaingDay, datenxt] = getNextPalindromeDate(userBirthDate);
+    let [remaingDay, nextDate] = getNextPalindromeDate(userBirthDate);
     displayPalindrome.innerText = "🙁 Sorry! Your birthday is not a palindrome";
-    nextPalindromeDate.innerText = `The next palindrome date is ${datenxt.day}-${datenxt.month}-${datenxt.year}. You missed it by ${remaingDay} days. `;
+    nextPalindromeDate.innerText = `The next palindrome date is ${nextDate.day}-${nextDate.month}-${nextDate.year}. You missed it by ${remaingDay} days. `;
+    nextPalindromeDate.style.backgroundColor = "#B91C1C";
+    nextPalindromeDate.style.color = "#FFFF";
   }
 };
 
